@@ -1,0 +1,44 @@
+//Counter.js
+import React, {useState, useEffect} from 'react';
+
+function Counter() {
+    const[count, setCount] = useState(0); //count is a state variable initialised to 0
+
+    useEffect(() => { //called once when component is mounted
+        console.log('Component mounted');
+    }, []); //The empty dependency array [] means it runs only on first render
+
+    useEffect(() => { //This useEffect runs every time count changes.
+        console.log('Component updated: count is now ', count);
+    }, [count]);
+
+    const increment = () => {
+        setCount(count => count + 1);
+    };
+
+    return(
+        <div>
+            <h1>Count: {count}</h1>
+            <button onClick={increment}>Increment</button>
+        </div>
+    );
+}
+
+export default Counter;
+//Makes this component available to use in other parts of the app.
+
+************************************************************************************
+//App.js
+import Counter from './Counter';
+
+function App() {
+  return (
+    <div className="App">
+      <h2>Counter Component</h2>
+      <Counter/>
+
+    </div>
+  );
+}
+
+export default App;
