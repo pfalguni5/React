@@ -1,0 +1,57 @@
+// create UserProfile.js in src
+
+import React, {useState} from 'react';
+
+function UserProfile({name, age, email}) { //userprofile is a functional component and name, age, email are 3 props
+    const[currentAge, setCurrentAge] = useState(age);
+
+    const handleIncreaseAge = () => { //function that increases age by 1
+        setCurrentAge(currentAge => currentAge + 1);
+};
+
+    return (
+        <div style={styles.card}>
+            <h2>User Profile</h2>
+            <p>Name: {name}</p>
+            <p>Age: {currentAge}</p>
+            <p>Email: {email}</p>
+            <button onClick={handleIncreaseAge}>Increased Age</button>
+        </div>
+    );
+}
+
+const styles = {
+    card: {
+        border: '1px solid #4caf50',
+        padding: '16px',
+        borderRadius: '8px',
+        width: '250px',
+        marginBottom: '16px',
+        backgroundColor: '#aabb6a'
+    }
+};
+
+export default UserProfile;
+//Exports the UserProfile component so it can be imported and used in other files
+
+
+***************************************************************************************************
+//App.js
+
+import React from 'react';
+import UserProfile from './UserProfile';
+import ProductCard from './ProductCard';
+
+function App() {
+  return (
+    <div style={{padding: '20px'}}>
+      <h1>React Props and States</h1>
+
+      {/*UserProfile component*/}
+      <UserProfile name="Sneha" age={12} email="sne5@gmail.com"/>
+      
+    </div>
+  );
+}
+
+export default App;
