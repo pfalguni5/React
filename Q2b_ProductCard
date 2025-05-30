@@ -1,0 +1,54 @@
+//ProductCard.js
+import React, {useState} from 'react';
+
+function ProductCard({productName, price}) {
+    const[quantity, setQuantity] = useState(0); //state variable quantity initialised to 0
+
+    const handleAddToCart = () => {
+        setQuantity(prev => prev + 1); 
+    }; //ensures React uses the latest state during updates
+
+    return (
+        <div style={styles.card}>
+            <h2>{productName}</h2>
+            <p>Price: Rs. {price}</p>
+            <p>Quantity: {quantity}</p>
+            <p><strong>Total: Rs. {price * quantity}</strong></p>
+            <button onClick={handleAddToCart}>Add to Cart</button>
+        </div>
+    );
+}
+
+const styles = {
+    card: {
+        border: '1px solid rgb(170, 175, 76)',
+        padding: '16px',
+        borderRadius: '8px',
+        width: '250px',
+        marginBottom: '16px',
+        backgroundColor: '#e8f5e9'
+    }
+};
+
+export default ProductCard;
+********************************************************************************************
+//App.js
+import React from 'react';
+import UserProfile from './UserProfile';
+import ProductCard from './ProductCard';
+
+function App() {
+  return (
+    <div style={{padding: '20px'}}>
+      <h1>React Props and States</h1>
+
+      {/*UserProfile component*/}
+      <UserProfile name="Sneha" age={12} email="sne5@gmail.com"/>
+      
+      {/*ProductCard component*/}
+      <ProductCard productName="Wireless mouse" price={29.99}/>
+    </div>
+  );
+}
+
+export default App;
