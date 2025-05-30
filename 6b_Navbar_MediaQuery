@@ -1,0 +1,125 @@
+//Navbar.js
+import React, { useState } from 'react';
+import './Navbar.css';
+
+function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  //Creates a state variable isMenuOpen to track whether the mobile menu is open (true) or closed (false). It’s initially false.
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  }; //Defines a function that toggles the value of isMenuOpen whenever the hamburger icon is clicked.
+
+  return (
+    <nav className="navbar">
+      <div className="logo">MyLogo</div>
+
+      <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
+        {/*When isMenuOpen is true, the class active is added to show the mobile menu.*/}
+
+
+        <li><a href="#" className="active">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+
+      <div className="hamburger" onClick={toggleMenu}>
+        ☰
+      </div>
+    </nav>
+  );
+}
+
+export default Navbar;
+
+*****************************************************************************
+//App.js
+import React from 'react';
+import Navbar from './Navbar';
+
+function App() {
+  return (
+    <div className="App">
+      <Navbar />
+      <div style={{ padding: '20px' }}>
+        <h2>Welcome to the Responsive Navbar Demo</h2>
+        <p>Resize the window to see the menu change.</p>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+**********************************************************************************
+//Navbar.css
+/* Base styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #004080;
+  padding: 15px 20px;
+  color: white;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 8px;
+  transition: background 0.3s ease;
+}
+
+.nav-links li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.nav-links li a.active {
+  border-bottom: 2px solid yellow;
+}
+
+.hamburger {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Responsive styles for mobile */
+@media screen and (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #004080;
+    flex-direction: column;
+    align-items: center;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .nav-links.active {
+    max-height: 300px;
+    padding-bottom: 10px;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
