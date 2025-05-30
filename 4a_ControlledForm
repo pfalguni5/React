@@ -1,0 +1,109 @@
+//ControlledForm.js
+import React, {useState, useEffect} from 'react';
+
+function ControlledForm() {
+    const[fullName, setFullName] = useState('');
+    const[email, setEmail] = useState('');
+    const[password, setPassword] = useState('');
+
+    const[error, setError] = useState({});
+    const[successMessage, setSuccessMessage] = useState('');
+    
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Prevent default form refresh
+        const newError = {}; //Initializes a temporary object newError to store any validation errors
+
+
+        // Validation: check if fields are empty
+        if(!fullName.trim()){
+            newError.fullName = 'Name is required';
+        }
+
+        if(!email.trim()){
+            newError.email = 'Email Address is required';
+        }
+        else if(!/\S+@\S+\.\S+/.test(email)){
+            newError.email = 'Invalid email format';
+        }
+        if (!password.trim()) {
+            newError.password = 'Password is required';
+        }
+
+        if(Object.keys(newError).length>0){ //If errors exist → update error state and clear success message
+            setError(newError);
+            setSuccessMessage('');
+        }
+        else{
+            // Clear errors and show success
+            setError({});
+            setSuccessMessage(`Success! Full Name: ${fullName}, Email: ${email}`);
+
+            //optionally clear form
+            setFullName('');
+            setEmail('');
+            setPassword('');
+        }
+    };
+
+    return(
+        <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+      <h2>Controlled Form</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Full Name:</label><br />
+          <input
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+          {error.fullName && <div style={{ color: 'red' }}>{error.fullName}</div>}
+        </div>
+
+        <div>
+          <label>Email Address:</label><br />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {error.email && <div style={{ color: 'red' }}>{error.email}</div>}
+        </div>
+
+        <div>
+          <label>Password:</label><br />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {error.password && <div style={{ color: 'red' }}>{error.password}</div>}
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {successMessage && (
+        <div style={{ color: 'green', marginTop: '20px' }}>{successMessage}</div>
+      )}
+    </div>
+    );
+}
+
+export default ControlledForm;
+
+********************************************************************************
+
+//App.js
+import logo from './logo.svg';
+import './App.css';
+import ControlledForm from './ControlledForm';
+
+function App() {
+  return (
+    <div className="App">
+      <ControlledForm/>
+    </div>
+  );
+}
+
+export default App;
