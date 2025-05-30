@@ -1,0 +1,102 @@
+//FeedbackForm.js
+import React, {useState} from 'react';
+
+function FeedbackForm() {
+    const[name, setName] = useState('');
+    const[feedback, setFeedback] = useState('');
+    const[errors, setErrors] = useState({});
+    const[submitted, setSubmitted] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); //prevents page reload on form submission
+        const newErrors = {}; //newErrors temporarily stores any validation errors.
+
+        //Validate name
+        if(!name.trim()){ //name.trim() ensures name isn't just whitespace.
+            newErrors.name = 'Name is required';
+        }
+
+        //Validate feedback
+        if(feedback.trim().length<20){
+            newErrors.feedback = 'Feedback must be at least 20 characters';
+        }
+        else if(feedback.trim().length>200){
+            newErrors.feedback = 'Feedback must not exceed 200 characters';
+        }
+
+        //set errors or show thank you message
+        if(Object.keys(newErrors).length>0){
+            setErrors(newErrors);
+            setSubmitted(false);
+        }
+        else{
+            setErrors({});
+            setSubmitted(true);
+
+        //Optionally clear form
+        setName('');
+        setFeedback('');
+        }
+    };
+    return(
+        <div style={{maxwidth: '500px', margin: '0 auto'}}>
+            <h2>Feedback Form</h2>
+
+            {submitted ? (
+        <div style={{ color: 'green' }}>Thank you for your feedback!</div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          {/* Name Field */}
+          <div>
+            <label>Name:</label><br />
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
+          </div>
+
+          {/* Feedback Field */}
+          <div style={{ marginTop: '15px' }}>
+            <label>Feedback:</label><br />
+            <textarea
+              rows="5"
+              cols="40"
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+            />
+            <div style={{ fontSize: '12px' }}>
+              Characters: {feedback.length}/200
+            </div>
+            {errors.feedback && (
+              <div style={{ color: 'red' }}>{errors.feedback}</div>
+            )}
+          </div>
+
+          <button type="submit" style={{ marginTop: '15px' }}>
+            Submit
+          </button>
+        </form>
+      )}
+        </div>
+    );
+}
+
+export default FeedbackForm;
+
+************************************************************************************
+//App.js
+import logo from './logo.svg';
+import './App.css';
+import FeedbackForm from './FeedbackForm';
+
+function App() {
+  return (
+    <div className="App">
+      <FeedbackForm />
+    </div>
+  );
+}
+
+export default App;
