@@ -1,0 +1,43 @@
+//Timer.js
+import React, {useState, useEffect} from 'react';
+
+function Timer() {
+    const[seconds, setSeconds] = useState(0); //second is a state variable initialsed to 0
+
+    useEffect(() => { //runs once the component is mounted
+        const interval = setInterval(() => { //setInterval() is used to increment the seconds state every 100ms.
+            setSeconds(prev => prev +1);
+        }, 100);
+
+        return () => {
+            clearInterval(interval);
+            console.log('Timer cleaned up');
+        };
+    }, []);
+
+    return (
+        <div>
+            {/*Renders the current number of seconds as the component updates every 100ms.*/}
+            <h1>Seconds: {seconds}</h1>
+        </div>
+    );
+}
+
+export default Timer;
+
+
+******************************************************************************
+//App.js
+import Timer from './Timer';
+
+function App() {
+  return (
+    <div className="App">
+  
+      <h2>Timer Component</h2>
+      <Timer/>
+    </div>
+  );
+}
+
+export default App;
