@@ -1,3 +1,12 @@
+*********************************************************
+first create project, locate file 
+to install redux : npm install redux react-redux
+
+under src make 2 folders:
+redux -> actions.js, reducer.js, store.js
+components -> Counter.js
+*********************************************************
+
 //actions.js
 // src/redux/actions.js
 
