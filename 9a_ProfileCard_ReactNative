@@ -1,0 +1,95 @@
+//ProfileCard.js
+
+*Make this file under components folder*
+
+import React from 'react';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+//these are all react native components
+
+// Get screen width of device for responsiveness
+const { width } = Dimensions.get('window');
+
+// Adjust styles based on screen size
+const isSmallScreen = width < 400;
+
+const ProfileCard = () => {
+  return (
+    <View style={styles.card}>
+      <Image
+        style={styles.avatar}
+        source={{
+          uri: 'https://img.freepik.com/free-photo/brunette-business-woman-with-wavy-long-hair-blue-eyes-stands-holding-notebook-hands_197531-343.jpg?semt=ais_hybrid&w=740',
+        }}
+      />
+      <Text style={styles.name}>Falguni Patil</Text>
+      <Text style={styles.bio}>
+        Full Stack Developer | React & Node Enthusiast
+      </Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#ffffff',
+    padding: isSmallScreen ? 15 : 25,
+    margin: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  avatar: {
+    width: isSmallScreen ? 80 : 120,
+    height: isSmallScreen ? 80 : 120,
+    borderRadius: 60,
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: isSmallScreen ? 18 : 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  bio: {
+    fontSize: isSmallScreen ? 14 : 18,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 5,
+  },
+});
+
+export default ProfileCard;
+
+************************************************************************************
+//index.tsx
+*Make this file in apps > (tabs) > index.tsx
+
+import { View, StyleSheet } from 'react-native';
+import ProfileCard from '../../components/ProfileCard'; // adjust path if needed
+
+export default function HomeScreen() {
+  return (
+    <View style={styles.container}>
+      <ProfileCard />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+});
+
