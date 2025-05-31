@@ -1,0 +1,101 @@
+*Make this file in app > (tabs) > index.tsx
+//index.tsx
+
+// app/login/index.tsx
+import { useState } from 'react';
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Text,
+  Dimensions,
+} from 'react-native';
+import { useRouter } from 'expo-router';
+//useRouter() is a hook from expo-router for navigation between screens
+
+const { width } = Dimensions.get('window');
+// gets the device's screen width
+const isSmallScreen = width < 600;
+
+//state variables for inputs
+export default function LoginScreen() {
+  const[name, setName] = useState('');
+  const[age, setAge] = useState(''); // initially all empty strings('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+  // Initializes the router object so we can navigate to other pages (like the home screen)
+
+  const handleLogin = () => {
+    // Navigate to profile page (which is your home screen)
+    router.push('/');
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
+
+      <View style={[styles.inputContainer, isSmallScreen ? {} : styles.row]}>
+      <TextInput
+          style={styles.input}
+          placeholder="Name"
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Age"
+          value={age}
+          onChangeText={setAge}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry //hides typed characters
+          value={password}
+          onChangeText={setPassword}
+        />
+      </View>
+
+      <Button title="Login" onPress={handleLogin} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 28,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    gap: 12,
+    marginBottom: 20,
+  },
+  input: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 6,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+    flex: 1,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});
