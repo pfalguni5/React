@@ -1,0 +1,137 @@
+*********************************************************
+first create project, locate file 
+to install redux : npm install redux react-redux
+
+under src make 2 folders:
+redux -> action.js, reducer.js, store.js
+components -> Counter.js
+*********************************************************
+
+// src/redux/actions.js
+
+export const INCREMENT = "INCREMENT";
+export const DECREMENT = "DECREMENT";
+//Define action types as constants to avoid typos.
+//"INCREMENT" and "DECREMENT" describe what kind of state change should happen.
+
+export const increment = () => ({
+  type: INCREMENT,
+});
+//increment is an action creator — a function that returns an action object with type "INCREMENT".
+
+export const decrement = () => ({
+  type: DECREMENT,
+});
+//decrement returns an action object with type "DECREMENT".
+
+*******************************************************************************
+// src/redux/reducer.js
+
+import { INCREMENT, DECREMENT } from "./actions";
+//Import action types.
+
+const initialState = {
+  count: 0,
+}; //Define the initial state with count set to 0.
+
+const counterReducer = (state = initialState, action) => { //counterReducer is a pure function that: Takes current state and an action.
+  switch (action.type) { //Uses switch to check action type.
+    case INCREMENT:
+      return { ...state, count: state.count + 1 }; //If INCREMENT, returns new state with count increased by 1.
+    case DECREMENT:
+      return { ...state, count: state.count - 1 }; //If DECREMENT, returns new state with count decreased by 1.
+    default:
+      return state; //If action type unknown, returns current state unchanged.
+  }
+};
+
+export default counterReducer;
+//Export the reducer for use in store creation.
+
+****************************************************************************************
+// src/redux/store.js
+
+import { createStore } from "redux"; //Import Redux's createStore.
+import counterReducer from "./reducer"; //Import the reducer you wrote.
+
+const store = createStore(counterReducer); //Create the Redux store with the reducer.
+
+export default store;
+//Export the store for use by React.
+
+********************************************************************************************
+// src/components/Counter.js
+
+import React from "react";
+import { useSelector, useDispatch } from "react-redux"; //Import useSelector to read state from Redux. Import useDispatch to dispatch actions.
+import { increment, decrement } from "../redux/actions"; //Import action creators.
+
+const Counter = () => {
+  const count = useSelector((state) => state.count); //useSelector gets the current count from Redux store.
+  const dispatch = useDispatch(); //useDispatch returns a function to dispatch actions.
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>Counter: {count}</h1>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+      <button onClick={() => dispatch(decrement())}>Decrement</button>
+    </div>
+  );
+};
+
+export default Counter;
+
+
+*****************************************************************************************
+// src/App.js
+
+import React from "react";
+import Counter from "./components/Counter";
+
+const App = () => {
+  return (
+    <div>
+      <Counter />
+    </div>
+  );
+};
+
+export default App;
+
+
+*****************************************************************************************
+// src/index.js
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import App from "./App";
+import store from "./redux/store";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
