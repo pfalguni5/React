@@ -1,4 +1,12 @@
 *Make this file in app > (tabs) > index.tsx
+
+*****************************************************
+install native env : npm install -g expo-cli
+to create app/project here : npx create-expo-app react-native-responsive-lab
+locate the file before excecuting : cd react-native-responsive-lab
+to run the project : npx expo start
+*******************************************************
+
 //index.tsx
 
 // app/login/index.tsx
