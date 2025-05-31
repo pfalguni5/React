@@ -1,0 +1,43 @@
+5.a
+import React from 'react'
+import { useState } from 'react';
+
+export default function Clickcounter() {
+      const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <h2>Counter: {count}</h2>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  )
+}
+
+Testfile:
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Clickcounter from "./Clickcounter";
+import '@testing-library/jest-dom';
+
+//First test checks:If Counter: 0 shows up If both buttons are rendered
+//Second test simulates clicking Increment and checks if it shows Counter: 1
+test("renders counter component", () => {
+  render(<Clickcounter />);
+  expect(screen.getByText("Counter: 0")).toBeInTheDocument();
+  expect(screen.getByText("Increment")).toBeInTheDocument();
+});
+
+test("increments counter on button click", () => {
+  render(<Clickcounter />);
+  fireEvent.click(screen.getByText("Increment"));
+  expect(screen.getByText("Counter: 1")).toBeInTheDocument();
+});
+
+test("increments correctly on multiple clicks",()=>{
+ render(<Clickcounter></Clickcounter>);
+ const button=screen.getByText("Increment");
+ fireEvent.click(button);
+ fireEvent.click(button);
+ fireEvent.click(button);
+ expect(screen.getByText("Counter: 3")).toBeInTheDocument();
+});
